@@ -12,3 +12,12 @@ table {
 th {
   font-weight: bold;
 }
+
+tr:nth-child(even){
+    background-color: #dddddd;
+}
+
+tr:hover {
+    color: white;
+    background-color: black;
+}
