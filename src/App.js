@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import RestaurantData from "./Components/RestaurantData";
+import Pagination from "./Components/Pagination";
 
 function App() {
   const [restaurantData, setRestaurantData] = useState([]);
-  const [sortDirection, setSortDirection] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
       console.log("fetching data");
-
+      setLoading(true);
       try {
         const res = await fetch(
           "https://code-challenge.spectrumtoolbox.com/api/restaurants/",
@@ -22,6 +25,7 @@ function App() {
         const data = await res.json();
         console.log(data);
         setRestaurantData(data);
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -29,6 +33,18 @@ function App() {
 
     fetchData();
   }, []);
+
+  //get current posts of restaurants
+  const indexOfLastRestaurant = currentPage * postsPerPage;
+  const indexOfFirstRestaurant = indexOfLastRestaurant - postsPerPage;
+  const currentPosts = restaurantData.slice(
+    indexOfFirstRestaurant,
+    indexOfLastRestaurant
+  );
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="App">
@@ -44,19 +60,14 @@ function App() {
           </tr>
         </thead>
         <tbody id="tableData">
-          {
-            restaurantData.map(restaurant => (
-              <tr key={restaurant.id}>
-                <td>{restaurant.name}</td>
-                <td>{restaurant.city}</td>
-                <td>{restaurant.state}</td>
-                <td>{restaurant.telephone}</td>
-                <td>{restaurant.genre}</td>
-              </tr>
-            ))
-            }
+          <RestaurantData restaurantData={currentPosts} loading={loading} />
         </tbody>
       </table>
+      <Pagination
+        postsPerPage={postsPerPage}
+        totalPosts={restaurantData.length}
+        paginate={paginate}
+      />
     </div>
   );
 }
