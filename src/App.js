@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [tabledata, setTableData] = useState("");
- 
+  const [restaurantData, setRestaurantData] = useState([]);
+  const [sortDirection, setSortDirection] = useState(false);
+  const [dataHTML, setDataHTML] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      
       console.log("fetching data");
 
       try {
@@ -21,7 +21,7 @@ function App() {
         );
         const data = await res.json();
         console.log(data);
-        setTableData(data);
+        setRestaurantData(data);
       } catch (err) {
         console.log(err);
       }
@@ -43,7 +43,19 @@ function App() {
             <th>Genre</th>
           </tr>
         </thead>
-        <tbody id="tableData"></tbody>
+        <tbody id="tableData">
+          {
+            restaurantData.map(restaurant => (
+              <tr key={restaurant.id}>
+                <td>{restaurant.name}</td>
+                <td>{restaurant.city}</td>
+                <td>{restaurant.state}</td>
+                <td>{restaurant.telephone}</td>
+                <td>{restaurant.genre}</td>
+              </tr>
+            ))
+            }
+        </tbody>
       </table>
     </div>
   );
