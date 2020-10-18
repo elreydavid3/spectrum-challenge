@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const [restaurantData, setRestaurantData] = useState([]);
   const [sortDirection, setSortDirection] = useState(false);
-  const [dataHTML, setDataHTML] = useState("");
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,7 +12,7 @@ function App() {
 
       try {
         const res = await fetch(
-          "https://cors-anywhere.herokuapp.com/https://code-challenge.spectrumtoolbox.com/api/restaurants/",
+          "https://code-challenge.spectrumtoolbox.com/api/restaurants/",
           {
             headers: {
               Authorization: "Api-Key q3MNxtfep8Gt",
