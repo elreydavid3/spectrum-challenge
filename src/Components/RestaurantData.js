@@ -1,6 +1,6 @@
 import React from "react";
 
-function RestaurantData({ restaurantData, loading, sortBy }) {
+function RestaurantData({ restaurantData, loading }) {
   if (loading) {
     console.log("loading");
   }

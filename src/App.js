@@ -3,20 +3,17 @@ import "./App.css";
 import RestaurantData from "./Components/RestaurantData";
 import Pagination from "./Components/Pagination";
 
+
+
 function App() {
   const [restaurantData, setRestaurantData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-  const [query,setQuery] = useState("");
-  
-  
-  
+  const [query, setQuery] = useState("");
+
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("fetching data");
-      setLoading(true);
       try {
         const res = await fetch(
           "https://code-challenge.spectrumtoolbox.com/api/restaurants/",
@@ -29,19 +26,17 @@ function App() {
         const data = await res.json();
         let sortedDataNames = data.sort((a, b) => {
           let fa = a.name.toLowerCase(),
-              fb = b.name.toLowerCase();
-      
+            fb = b.name.toLowerCase();
+
           if (fa < fb) {
-              return -1;
+            return -1;
           }
           if (fa > fb) {
-              return 1;
+            return 1;
           }
           return 0;
-      })
-        console.log(sortedDataNames)
+        });
         setRestaurantData(sortedDataNames);
-        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -50,6 +45,31 @@ function App() {
     fetchData();
   }, []);
 
+
+  const reSort = (sortedField) =>{
+    if (sortedField !== null) {
+      const newSort =[...restaurantData].sort((a, b) => {
+        let fa = a[sortedField].toLowerCase(),
+            fb = b[sortedField].toLowerCase();
+        if (fa < fb) {
+          return -1;
+        }
+        if (fa > fb) {
+          return 1;
+        }
+        return 0;
+        
+      });
+      setRestaurantData(newSort)
+    }
+   
+    
+  }
+
+
+
+
+
   //get current posts of restaurants
   const indexOfLastRestaurant = currentPage * postsPerPage;
   const indexOfFirstRestaurant = indexOfLastRestaurant - postsPerPage;
@@ -57,42 +77,65 @@ function App() {
     indexOfFirstRestaurant,
     indexOfLastRestaurant
   );
-
+  
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-//search with searchbar to to filter table by name, city & genre
-  function search(rows){
-    return rows.filter(row => 
-      row.name.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-      row.city.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
-      row.genre.toLowerCase().indexOf(query.toLowerCase()) > -1
-      )
+
+  //search with searchbar to to filter table by name, city & genre
+  const search = (rows) =>{
+    return rows.filter(
+      (row) =>
+        row.name.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
+        row.city.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
+        row.genre.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
+        row.state.toLowerCase().indexOf(query.toLowerCase()) > -1
+    );
   }
-  /*
-  function sortBy(key){
-    setRestaurantData(restaurantData.sort((a, b) => a < b))
-  }
-*/
+  
+ 
+
   return (
     <div className="App">
       <h1>Restaurant App</h1>
-      <br/>
-      <input placeholder="type name, city, or genre" type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
+      <br />
+
+      <input
+        placeholder="type name, city, or genre"
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+    
       <table>
         <thead>
           <tr>
             <th>Name</th>
             <th>City</th>
-            <th>State</th>
+            <th>
+              <button onClick={() =>
+                reSort('state')
+                }>
+                State
+              </button>
+            </th>
             <th>Phone</th>
-            <th>Genre</th>
+            <th>
+              <button onClick={() =>
+                reSort('genre')
+              }>
+                Genre
+                </button>
+              </th>
           </tr>
         </thead>
         <tbody id="tableData">
-          <RestaurantData restaurantData={search(currentPosts)} loading={loading}  />
+          <RestaurantData
+            restaurantData={search(currentPosts)}
+          />
         </tbody>
       </table>
+  
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={restaurantData.length}
