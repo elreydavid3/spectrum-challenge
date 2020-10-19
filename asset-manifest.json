@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/spectrum-challenge/static/css/main.9314add7.chunk.css",
+    "main.js": "/spectrum-challenge/static/js/main.7cb235aa.chunk.js",
+    "main.js.map": "/spectrum-challenge/static/js/main.7cb235aa.chunk.js.map",
+    "runtime-main.js": "/spectrum-challenge/static/js/runtime-main.0dc734aa.js",
+    "runtime-main.js.map": "/spectrum-challenge/static/js/runtime-main.0dc734aa.js.map",
+    "static/js/2.a975a80d.chunk.js": "/spectrum-challenge/static/js/2.a975a80d.chunk.js",
+    "static/js/2.a975a80d.chunk.js.map": "/spectrum-challenge/static/js/2.a975a80d.chunk.js.map",
+    "index.html": "/spectrum-challenge/index.html",
+    "precache-manifest.d6a89b7b3951f56ffc3f8555d3c4fbbc.js": "/spectrum-challenge/precache-manifest.d6a89b7b3951f56ffc3f8555d3c4fbbc.js",
+    "service-worker.js": "/spectrum-challenge/service-worker.js",
+    "static/css/main.9314add7.chunk.css.map": "/spectrum-challenge/static/css/main.9314add7.chunk.css.map",
+    "static/js/2.a975a80d.chunk.js.LICENSE.txt": "/spectrum-challenge/static/js/2.a975a80d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0dc734aa.js",
+    "static/js/2.a975a80d.chunk.js",
+    "static/css/main.9314add7.chunk.css",
+    "static/js/main.7cb235aa.chunk.js"
+  ]
+}
