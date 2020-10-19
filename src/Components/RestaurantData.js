@@ -1,6 +1,6 @@
 import React from "react";
 
-function RestaurantData({ restaurantData, loading }) {
+function RestaurantData({ restaurantData, loading, sortBy }) {
   if (loading) {
     console.log("loading");
   }
@@ -13,7 +13,7 @@ function RestaurantData({ restaurantData, loading }) {
           <td>{restaurant.city}</td>
           <td>{restaurant.state}</td>
           <td>{restaurant.telephone}</td>
-          <td>{restaurant.genre}</td>
+          <td>{restaurant.genre.split(",").sort().join()}</td>
         </tr>
       ))}
     </>
