@@ -14,7 +14,6 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("fetching data");
       try {
         const res = await fetch(
           "https://code-challenge.spectrumtoolbox.com/api/restaurants/",
@@ -46,9 +45,6 @@ function App() {
     fetchData();
   }, []);
 
-  console.log(restaurantData.map(item =>{
-    return item.state
-  }))
 
   const reSort = (sortedField) =>{
     if (sortedField !== null) {
