@@ -8,6 +8,10 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
+  const [query,setQuery] = useState("");
+  
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,8 +27,20 @@ function App() {
           }
         );
         const data = await res.json();
-        console.log(data);
-        setRestaurantData(data);
+        let sortedDataNames = data.sort((a, b) => {
+          let fa = a.name.toLowerCase(),
+              fb = b.name.toLowerCase();
+      
+          if (fa < fb) {
+              return -1;
+          }
+          if (fa > fb) {
+              return 1;
+          }
+          return 0;
+      })
+        console.log(sortedDataNames)
+        setRestaurantData(sortedDataNames);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -45,10 +61,24 @@ function App() {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
+//search with searchbar to to filter table by name, city & genre
+  function search(rows){
+    return rows.filter(row => 
+      row.name.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
+      row.city.toLowerCase().indexOf(query.toLowerCase()) > -1 ||
+      row.genre.toLowerCase().indexOf(query.toLowerCase()) > -1
+      )
+  }
+  /*
+  function sortBy(key){
+    setRestaurantData(restaurantData.sort((a, b) => a < b))
+  }
+*/
   return (
     <div className="App">
       <h1>Restaurant App</h1>
+      <br/>
+      <input placeholder="type name, city, or genre" type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
       <table>
         <thead>
           <tr>
@@ -60,7 +90,7 @@ function App() {
           </tr>
         </thead>
         <tbody id="tableData">
-          <RestaurantData restaurantData={currentPosts} loading={loading} />
+          <RestaurantData restaurantData={search(currentPosts)} loading={loading}  />
         </tbody>
       </table>
       <Pagination
