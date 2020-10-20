@@ -82,7 +82,7 @@ function App() {
     setCurrentPage(pageNumber);
   };
 
-  //search with searchbar to to filter table by name, city & genre
+  //search with searchbar to to filter table by name, city, state & genre
   const search = (rows) =>{
     return rows.filter(
       (row) =>
