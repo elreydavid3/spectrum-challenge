@@ -8,9 +8,9 @@ import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-require('dotenv').config()
-
-
+import StateFilter from "./Components/StateFilter";
+import GenreFilter from "./Components/GenreFilter";
+require("dotenv").config();
 
 function App() {
   const [isClicked, setIsClicked] = useState({
@@ -97,7 +97,6 @@ function App() {
     setRestaurantData(descendedOrder);
   };
 
-
   const handleSort = (column) => {
     switch (column) {
       case "name":
@@ -159,19 +158,23 @@ function App() {
     );
   };
 
- 
-
   return (
     <div className="App">
       <h1>Restaurant App</h1>
       <br />
-
+      <StateFilter restaurantData={restaurantData}/>
+      <GenreFilter restaurantData={restaurantData}/>
+      <form>
+      <label>Search:</label>
       <input
+        className="searchBar"
         placeholder="type name, city, or genre"
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+      <input type="submit" value="Submit Search" />
+      </form>
       <table>
         <thead>
           <tr>
